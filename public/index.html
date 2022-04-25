@@ -1,109 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Translate</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Translate</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/xlsx.min.js"></script>
+  <script src="js/scripts.js"></script>
 </head>
+
 <body>
 
 
   <div class="waveWrapper waveAnimation">
     <div class="waveWrapperInner bgTop">
-      <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
+      <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')">
+      </div>
     </div>
     <div class="waveWrapperInner bgMiddle">
-      <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
+      <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')">
+      </div>
     </div>
     <div class="waveWrapperInner bgBottom">
-      <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
+      <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')">
+      </div>
     </div>
   </div>
-    
-    <div class="card">
-        <input type="radio" name="select" id="slide_1" checked>
-        <input type="radio" name="select" id="slide_2">
-        <input type="radio" name="select" id="slide_3">
-        <input type="checkbox" id="slideImg">
-      
-        <div class="slider">
-          <label for="slide_1" class="slide slide_1"></label>
-          <label for="slide_2" class="slide slide_2" id="slide_2"></label>
-          <label for="slide_3" class="slide slide_3" id="slide_3"></label>
+
+  <div class="card">
+    <input type="radio" name="select" id="slide_1" checked>
+    <input type="radio" name="select" id="slide_2">
+    <input type="radio" name="select" id="slide_3">
+    <input type="checkbox" id="slideImg">
+
+    <div class="slider">
+      <label for="slide_1" class="slide slide_1"></label>
+      <label for="slide_2" class="slide slide_2" id="slide_2"></label>
+      <label for="slide_3" class="slide slide_3" id="slide_3"></label>
+    </div>
+
+    <div class="inner_part">
+      <label for="slideImg" class="img">
+        <img class="img_1" src="img/1.png">
+      </label>
+      <div class="content content_1">
+        <div class="title">1. Sube tu archivo</div>
+        <div class="text">
+          Como primer paso sube tu archivo .json o .xlsx para comenzar a traducirlo.
         </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_1" src="img/1.png">
-          </label>
-          <div class="content content_1">
-              <div class="title">1. Sube tu archivo</div>
-              <div class="text">
-                Como primer paso sube tu archivo .json  para comenzar a traducirlo.
-              </div>
-            
-              <form action="post" id="formFile">
-                <input type="file" name="file" id="fileInput" accept=".json" style="display: block;" onchange="loadFile(this.files[0])"> 
-                <button onclick="go2()" id="buttonUpload" type="button">Sube tu archivo</button>
-              </form>
-          </div>
-        </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_2" src="img/2.png">
-          </label>
-          <div class="content content_2">
-            <div class="title">2. Traducir</div>
-            <div class="text">
-                Se utilizarán librerías y APIs de Google translate para hacer una traducción automática.
-                <br><br><br>
-                
-                <select  id="lang1" onchange="changeLang(1)">
-                  <option value="es">Español</option>
-                  <option value="en">Ingles</option>
-                  <option value="pt">Portugues</option>
-                </select>
-                ⇨
-                <select  id="lang2" onchange="changeLang(2)">
-                  <option value="en">Ingles</option>
-                  <option value="es">Español</option>
-                  <option value="pt">Portugues</option>
-                </select>
-            </div>
-            <button onclick="go3()">Traducir</button>
-          </div>
-        </div>
-      
-        <div class="inner_part">
-          <label for="slideImg" class="img">
-            <img class="img_3" src="img/3.png">
-          </label>
-          <div class="content content_3">
-            <div class="title">3. Exportar</div>
-            <div class="text">
-                ¡Hemos terminado!  <br> Solo da click en el botón para descargar tu archivo .json traducido para empezar a programar 🥳 
-                <div class="advertencia">
-                  Recuerda que las traducciones automatizadas pueden ser inexactas, te recomendamos que una vez terminado el proceso verifiques que estas sean correctas y de tu agrado.
-                </div>
-                
-            </div>
-            <button onclick="dowload()">Descargar</button>
-          </div>
-        </div>
+
+        <form action="post" id="formFile">
+          <input type="file" name="file" id="fileInput" accept=".json,.xlsx" style="display: block;"
+            onchange="loadFile(this.files[0])">
+          <button onclick="go2()" id="buttonUpload" type="button">Sube tu archivo</button>
+        </form>
       </div>
+    </div>
 
-      
-      <div id="cover">
-        <div class="load">
-          <hr/><hr/><hr/><hr/>
+    <div class="inner_part">
+      <label for="slideImg" class="img">
+        <img class="img_2" src="img/2.png">
+      </label>
+      <div class="content content_2">
+        <div class="title">2. Traducir</div>
+        <div class="text">
+          Se utilizarán librerías y APIs de Google translate para hacer una traducción automática.
+          <br><br><br>
+
+          <select id="lang1" onchange="changeLang(1)">
+            <option value="es">Español</option>
+            <option value="en">Ingles</option>
+            <option value="pt">Portugues</option>
+          </select>
+          ⇨
+          <select id="lang2" onchange="changeLang(2)">
+            <option value="en">Ingles</option>
+            <option value="es">Español</option>
+            <option value="pt">Portugues</option>
+          </select>
         </div>
+        <button onclick="go3()">Traducir</button>
       </div>
+    </div>
+
+    <div class="inner_part">
+      <label for="slideImg" class="img">
+        <img class="img_3" src="img/3.png">
+      </label>
+      <div class="content content_3">
+        <div class="title">3. Exportar</div>
+        <div class="text">
+          ¡Hemos terminado! <br> Solo da click en el botón para descargar tu archivo .json traducido para empezar a
+          programar 🥳
+          <div class="advertencia">
+            Recuerda que las traducciones automatizadas pueden ser inexactas, te recomendamos que una vez terminado el
+            proceso verifiques que estas sean correctas y de tu agrado.
+          </div>
+
+        </div>
+        <button onclick="dowload()">Descargar</button>
+      </div>
+    </div>
+  </div>
 
 
-      
+  <div id="cover">
+    <div class="load">
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+    </div>
+  </div>
+
+
+
 </body>
+
 </html>
