@@ -32,6 +32,11 @@ translate({
   
 })
 
+//api para descargar archivo base de excel
+app.get('/dowload_base', (req, res)=>{
+    res.sendFile(__dirname + '/public/base/base.xlsx');
+})
+
 //correr aplicacion
 app.listen(app.get('port'), ()=>{
     console.log(`Aplicacion corriendo en el puerto ${app.get('port')}`);

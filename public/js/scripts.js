@@ -62,7 +62,9 @@ async function go3() {
     var slide3 = document.getElementById('slide_3');
     slide3.click();
 }
-
+function dowloadBaseFile() {
+    window.open("http://localhost:3000/dowload_base", "Descargar archivo")
+}
 async function dowload() {
 
     var element = document.createElement('a');
