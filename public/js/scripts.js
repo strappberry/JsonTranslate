@@ -5,8 +5,13 @@ var language1 = 'es';
 var language2 = 'en'
 async function ajaxTranslate(text) {
     var toReturn;
-    await fetch('http://localhost:3000/get_translation?language1=' + language1 + '&language2=' + language2 + '&txt=' + text, {
-        method: 'GET'
+    await fetch('http://localhost:3000/get_translation', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({'language1':language1,'language2': language2,'txt': text})
     })
         .then(function (response) {
             if (response.ok) {
@@ -24,6 +29,7 @@ async function ajaxTranslate(text) {
         });
     return toReturn;
 }
+
 function changeLang(languageType) {
     //significa que se cambia el lenguage de origen
     if (languageType == 1) {
@@ -58,7 +64,17 @@ async function go3() {
 }
 
 async function dowload() {
-    window.open("http://localhost:3000/dowload_translation?content=" + jsonTextTraduced + "&lang=" + language2, "Descargar archivo")
+
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonTextTraduced));
+    element.setAttribute('download', language2+'.json');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
 async function loadFile(file) {
     if (file.type == 'application/json') {
@@ -73,25 +89,25 @@ async function loadFile(file) {
 }
 
 async function recursiveJson(textJSON) {
-    var arrayTraduced = "{";
+    var arrayTraduced = "{ \n";
     //el siguiente ciclo funciona para obtener los nombres de las keys del json
     for (var i in textJSON) {
         //verificamos que no sea un json anidado, si lo es manda a llamar esta misma funcion pero ahora con el json anidado como variable
         if (typeof textJSON[i] === 'string' || textJSON[i] instanceof String) {
             var traduced = await ajaxTranslate([textJSON[i]]);
-            arrayTraduced += '"' + i + '":"' + traduced + '",';
+            arrayTraduced += '  "' + i + '" : "' + traduced + '",\n';
         } else {
             try {
-                arrayTraduced += '"' + i + '":' + await recursiveJson(textJSON[i]) + ',';
+                arrayTraduced += '  "' + i + '" : ' + await recursiveJson(textJSON[i]) + ',\n';
             } catch (error) {
-                arrayTraduced += '"' + i + '":"' + textJSON[i] + '",';
+                arrayTraduced += '  "' + i + '" : "' + textJSON[i] + '",\n';
             }
         }
     }
 
     // eliminamos la ultima coma
-    arrayTraduced = arrayTraduced.substring(0, arrayTraduced.length - 1);
-    arrayTraduced += '}';
+    arrayTraduced = arrayTraduced.substring(0, arrayTraduced.length - 2);
+    arrayTraduced += '\n}';
     return arrayTraduced;
 }
 
